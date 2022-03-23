@@ -1,0 +1,22 @@
+{
+  "name": "weather-app",
+  "version": "1.0.0",
+  "description": "Check the weather near you and prepare for your day!",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Etchmon/weather-app.git"
+  },
+  "keywords": [
+    "weather-app"
+  ],
+  "author": "James Etchells",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Etchmon/weather-app/issues"
+  },
+  "homepage": "https://github.com/Etchmon/weather-app#readme"
+}
