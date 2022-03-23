@@ -22,3 +22,36 @@ const Handler = (() => {
     getCoordinates();
 })();
 
+const Display = (() => {
+
+    const inputForm = () => {
+        const dom = document.querySelector('.content');
+        const container = document.createElement('div');
+        const input = document.createElement('input');
+        const btn = document.createElement('button');
+
+        btn.innerHTML = 'search';
+        btn.onclick = () => getInput();
+        Object.assign(input, {
+            type: 'text',
+            placeholder: 'city name...'
+        });
+
+        function getInput() {
+            console.log(input.value);
+            return input.value;
+        }
+
+        container.appendChild(input);
+        container.appendChild(btn);
+        dom.appendChild(container);
+
+        return getInput;
+    };
+
+    const initiateDom = (() => {
+        inputForm();
+    })();
+
+    return { inputForm }
+})();
