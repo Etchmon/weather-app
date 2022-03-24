@@ -241,7 +241,7 @@ const DisplayController = (() => {
 
         temp.innerHTML = data.current.temp.toFixed(0);
         feelsLike.innerHTML = 'feels like ' + data.current.feels_like.toFixed(0) + '°F';
-        condition.src = `http://openweathermap.org/img/wn/${data.current.weather[0].icon}@4x.png`;
+        condition.src = `https://openweathermap.org/img/wn/${data.current.weather[0].icon}@4x.png`;
         riseSet.innerHTML = `Sunrise: ${getHumanTime(data.current.sunrise)} Sunset: ${getHumanTime(data.current.sunset)}`;
         humidity.innerHTML = 'humidity: ' + data.current.humidity + '%';
         wind.innerHTML = 'wind: ' + data.current.wind_speed + ' mph';
