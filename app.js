@@ -73,7 +73,8 @@ const Display = (() => {
                 DisplayController.setHeader(`${data[0].name}, ${data[0].state}`);
                 DisplayController.setDash(dataApi);
             } catch (error) {
-                console.log(error)
+                console.log(error);
+                input.value = '';
                 return;
             }
 
@@ -254,4 +255,4 @@ const DisplayController = (() => {
     return { setHeader, setDash };
 })();
 
-window.onload = async () => await Handler.getCurrentLocation();
+window.onload = Handler.getCurrentLocation();
