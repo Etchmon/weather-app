@@ -223,7 +223,7 @@ const DisplayController = (() => {
             const card = Display.weekTempCard();
 
             card.querySelector('.week-day').innerHTML = getHumanDay(element.dt);
-            card.querySelector('.week-img').src = `http://openweathermap.org/img/wn/${element.weather[0].icon}@2x.png`;
+            card.querySelector('.week-img').src = `https://openweathermap.org/img/wn/${element.weather[0].icon}@2x.png`;
             card.querySelector('.week-temp').innerHTML = element.temp.day.toFixed(0) + '°F';
             card.querySelector('.week-condition').innerHTML = element.weather[0].main;
 
