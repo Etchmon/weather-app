@@ -8,7 +8,7 @@ const Handler = (() => {
     };
 
     async function getCoordinates(city) {
-        const response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=3&appid=880ffa59f6aeed6d569e7450459fec7e`, { mode: 'cors' });
+        const response = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=3&appid=880ffa59f6aeed6d569e7450459fec7e`, { mode: 'cors' });
 
         const coordinateData = await response.json();
 
