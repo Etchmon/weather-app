@@ -12,7 +12,14 @@ const Handler = (() => {
 
         const coordinateData = await response.json();
 
-        return coordinateData;
+        if (coordinateData.length === 0) {
+            alert('No such City');
+            return;
+        } else {
+            return coordinateData;
+        }
+
+
     };
 
     async function getCurrentLocation() {
@@ -51,17 +58,26 @@ const Display = (() => {
         btn.onclick = () => getInput();
         Object.assign(input, {
             type: 'text',
-            placeholder: 'city name...'
+            placeholder: 'city name...',
+            class: 'search-input'
         });
 
         async function getInput() {
-            const data = await Handler.getCoordinates(input.value);
-            const lat = data[0].lat.toFixed(2);
-            const long = data[0].lon.toFixed(2);
-            const dataApi = await Handler.oneCallApi(lat, long);
 
-            DisplayController.setHeader(`${data[0].name}, ${data[0].state}`);
-            DisplayController.setDash(dataApi);
+            try {
+                const data = await Handler.getCoordinates(input.value);
+                const lat = data[0].lat.toFixed(2);
+                const long = data[0].lon.toFixed(2);
+                const dataApi = await Handler.oneCallApi(lat, long);
+
+                DisplayController.setHeader(`${data[0].name}, ${data[0].state}`);
+                DisplayController.setDash(dataApi);
+            } catch (error) {
+                console.log(error)
+                return;
+            }
+
+
         };
 
         container.appendChild(input);
