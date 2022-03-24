@@ -89,6 +89,7 @@ section h1 {
 .week-temps {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, min-content));
+  grid-row-gap: 1rem;
   justify-content: space-evenly;
 }
 
