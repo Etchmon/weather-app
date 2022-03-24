@@ -50,11 +50,6 @@ const Handler = (() => {
 
     };
 
-    console.log(navigator.geolocation.getCurrentPosition(position => {
-        const { latitude, longitude } = position.coords;
-        console.log(latitude, longitude)
-    }));
-
     return { getCoordinates, oneCallApi, getCurrentLocation }
 })();
 
@@ -210,8 +205,6 @@ const DisplayController = (() => {
     };
 
     const setDash = (data) => {
-        console.log(data);
-        console.log(data.current);
         setCurrentTemp(data);
         setWeekTemps(data);
     };
