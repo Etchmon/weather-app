@@ -5,7 +5,7 @@ const Handler = (() => {
         const oneCallData = await response.json();
 
         return oneCallData;
-    }
+    };
 
     async function getCoordinates(city) {
         const response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=3&appid=880ffa59f6aeed6d569e7450459fec7e`);
@@ -13,14 +13,29 @@ const Handler = (() => {
         const coordinateData = await response.json();
 
         return coordinateData;
-    }
+    };
+
+    async function getCurrentLocation() {
+        navigator.geolocation.getCurrentPosition(async position => {
+            const { latitude, longitude } = position.coords;
+            const data = await oneCallApi(latitude.toFixed(2), longitude.toFixed(2));
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude.toFixed(2)}&lon=${longitude.toFixed(2)}&appid=880ffa59f6aeed6d569e7450459fec7e`);
+
+            const currentData = await response.json();
+
+            DisplayController.setHeader(currentData.name);
+            DisplayController.setDash(data);
+        });
+
+
+    };
 
     console.log(navigator.geolocation.getCurrentPosition(position => {
         const { latitude, longitude } = position.coords;
         console.log(latitude, longitude)
     }));
 
-    return { getCoordinates, oneCallApi }
+    return { getCoordinates, oneCallApi, getCurrentLocation }
 })();
 
 const Display = (() => {
@@ -169,12 +184,12 @@ const DisplayController = (() => {
         console.log(data.current);
         setCurrentTemp(data);
         setWeekTemps(data);
-    }
+    };
 
     const setWeekTemps = (data) => {
-        console.log(data)
+        const container = document.querySelector('.week-temps');
+        container.innerHTML = '';
         data.daily.forEach(element => {
-            const container = document.querySelector('.week-temps');
             const card = Display.weekTempCard();
 
             card.querySelector('.week-day').innerHTML = getHumanDay(element.dt);
@@ -184,7 +199,7 @@ const DisplayController = (() => {
 
             container.appendChild(card);
         });
-    }
+    };
 
     const setCurrentTemp = (data) => {
         const temp = document.querySelector('.current-temp');
@@ -197,20 +212,30 @@ const DisplayController = (() => {
         temp.innerHTML = data.current.temp.toFixed(0);
         feelsLike.innerHTML = 'feels like ' + data.current.feels_like.toFixed(0) + '°F';
         condition.src = `http://openweathermap.org/img/wn/${data.current.weather[0].icon}@4x.png`;
-        riseSet.innerHTML = `Sunrise: ${data.current.sunrise} Sunset: ${data.current.sunset}`;
+        riseSet.innerHTML = `Sunrise: ${getHumanTime(data.current.sunrise)} Sunset: ${getHumanTime(data.current.sunset)}`;
         humidity.innerHTML = 'humidity: ' + data.current.humidity + '%';
         wind.innerHTML = 'wind: ' + data.current.wind_speed + ' mph';
-    }
+    };
 
     const getHumanDay = (time) => {
-        const unixTime = time;
         const miliseconds = time * 1000;
         const dateObject = new Date(miliseconds);
 
-        const humanDate = dateObject.toLocaleString("en-US", { weekday: "long" })
+        const humanDate = dateObject.toLocaleString("en-US", { weekday: "long" });
 
         return humanDate;
-    }
+    };
+
+    const getHumanTime = (time) => {
+        const miliseconds = time * 1000;
+        const dateObject = new Date(miliseconds);
+
+        const humanTime = dateObject.toLocaleString("en-US", { hour: "numeric", minute: "numeric" });
+
+        return humanTime;
+    };
 
     return { setHeader, setDash };
 })();
+
+window.onload = async () => await Handler.getCurrentLocation();
