@@ -1,6 +1,6 @@
 const Handler = (() => {
     async function oneCallApi(lat, long) {
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&units=imperial&appid=880ffa59f6aeed6d569e7450459fec7e`);
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&units=imperial&appid=880ffa59f6aeed6d569e7450459fec7e`, { mode: 'cors' });
 
         const oneCallData = await response.json();
 
@@ -8,7 +8,7 @@ const Handler = (() => {
     };
 
     async function getCoordinates(city) {
-        const response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=3&appid=880ffa59f6aeed6d569e7450459fec7e`);
+        const response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=3&appid=880ffa59f6aeed6d569e7450459fec7e`, { mode: 'cors' });
 
         const coordinateData = await response.json();
 
@@ -25,13 +25,26 @@ const Handler = (() => {
     async function getCurrentLocation() {
         navigator.geolocation.getCurrentPosition(async position => {
             const { latitude, longitude } = position.coords;
-            const data = await oneCallApi(latitude.toFixed(2), longitude.toFixed(2));
-            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude.toFixed(2)}&lon=${longitude.toFixed(2)}&appid=880ffa59f6aeed6d569e7450459fec7e`);
 
-            const currentData = await response.json();
+            try {
+                const data = await oneCallApi(latitude.toFixed(2), longitude.toFixed(2));
+                const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude.toFixed(2)}&lon=${longitude.toFixed(2)}&appid=880ffa59f6aeed6d569e7450459fec7e`);
 
-            DisplayController.setHeader(currentData.name);
-            DisplayController.setDash(data);
+                const currentData = await response.json();
+
+                DisplayController.setHeader(currentData.name);
+                DisplayController.setDash(data);
+            } catch (error) {
+                console.log(error);
+                const data = await oneCallApi(32.79, -117.23);
+                const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=$32.79&lon=$-117.23&appid=880ffa59f6aeed6d569e7450459fec7e`);
+
+                const currentData = await response.json();
+
+                DisplayController.setHeader(currentData.name);
+                DisplayController.setDash(data);
+            }
+
         });
 
 
