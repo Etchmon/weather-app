@@ -1,3 +1,8 @@
+// ----Future Improvements-----
+// -toggle imperial/metric api call
+// Fade in from a fullscreen loader image, wait until data is loaded to display main page
+// real time validation on form input
+
 const Handler = (() => {
     async function oneCallApi(lat, long) {
         const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&units=imperial&appid=880ffa59f6aeed6d569e7450459fec7e`, { mode: 'cors' });
