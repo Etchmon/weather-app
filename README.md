@@ -2,6 +2,8 @@
 
 The Weather App is a web application that provides real-time weather information for various locations. It allows users to search for a specific location and view the current weather conditions as well as the forecast for the upcoming days.
 
+<iframe src="https://drive.google.com/file/d/1fWPs4FJjn5B1jSozqEwL37U21OLCxKTZ/preview" width="640" height="480"></iframe>
+
 ## Features
 
 - Location Search: Users can search for a specific location by entering the city name or zip code.
